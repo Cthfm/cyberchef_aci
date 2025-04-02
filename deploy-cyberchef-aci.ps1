@@ -1,14 +1,16 @@
-# Set variables
-$RG="cyberchef-lab12"
+
+
+Write-Host "Setting Variables for resources" -ForegroundColor Green
+$RG="cyberchef-lab"
 $LOCATION="eastus"
-$VNET="cyberchef-vnet12"
-$VM_SUBNET="vm-subnet12"
-$ACI_SUBNET="aci-subnet12"
-$NSG="vm-nsg12"
-$NIC="vm-nic12"
-$VM="win-vm12"
-$IP="vm-public-ip12"
-$ACI="cyberchef12"
+$VNET="cyberchef-vnet"
+$VM_SUBNET="vm-subnet"
+$ACI_SUBNET="aci-subnet"
+$NSG="vm-nsg"
+$NIC="vm-nic"
+$VM="win-vm"
+$IP="vm-public-ip"
+$ACI="cyberchef"
 $MYIP="1.1.1.1"  # Replace with your actual IP
 $USERNAME="azureuser"
 $PASSWORD="YouGottaChangeMe!Pass123" # Change this please.
@@ -37,6 +39,5 @@ az vm create --resource-group $RG --name $VM --image microsoftwindowsdesktop:win
 
 Write-Host "Deploying the ACI with CyberChef Installed" -ForegroundColor Green 
 az container create --resource-group $RG --name $ACI --image ghcr.io/gchq/cyberchef --vnet $VNET --subnet $ACI_SUBNET --ports 80 --ip-address Private --cpu 1 --memory 1.5 --location $LOCATION --os-type=Linux
-
 
 Write-Host "Your Azure Container instance is at IP:$(az container show --resource-group $RG --name $ACI --query ipAddress.ip --output tsv)" "Login to the VM and in your browser type http://$(az container show --resource-group $RG --name $ACI --query ipAddress.ip --output tsv)" -ForegroundColor Green
